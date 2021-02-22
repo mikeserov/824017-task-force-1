@@ -1,5 +1,5 @@
 <?php
-namespace MyClasses;
+namespace MyClasses\controllers;
 
 class Task
 {

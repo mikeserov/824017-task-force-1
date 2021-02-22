@@ -1,5 +1,5 @@
 <?php
-use MyClasses\Task;
+use MyClasses\controllers\Task;
 
 require_once 'vendor/autoload.php';
 
