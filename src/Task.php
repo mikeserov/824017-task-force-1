@@ -1,4 +1,6 @@
 <?php
+namespace MyClasses;
+
 class Task
 {
 	const STATUS_NEW = 'new';
@@ -56,9 +58,9 @@ class Task
 	public function getAvailableAction(int $user_id): ?string 
 	{
 		switch ($this->cur_status) {
-			case 'new': 
+			case 'new': 										//нужно ли поставить в case константу вместо 'new', т.е. self::STATUS_NEW.
 				if ($user_id === $this->executant_id) {
-					$available_action = 'to execute'; 			 //нужно ли поставить в case константу вместо 'new', т.е. self::STATUS_NEW.
+					$available_action = 'to execute'; 			 
 				} else {
 					$available_action = 'to cancel';
 				} 
@@ -71,9 +73,9 @@ class Task
 				}
 				break;
 			default:
-				$available_actions = null; 
+				$available_action = null; 
 		}
-		return $available_action;  //проходит ли это по критерию Б36?
+		return $available_action;  //не нарушается ли здесь правило критерия Б36?
 	}
 	public function getMapping(): array
 	{
@@ -85,6 +87,7 @@ class Task
 	public function setStatus(string $new_status)
 	{
 		$this->cur_status = $new_status;
+		echo "статус сменен на $this->cur_status <br><br>";
 	} 
 
 }

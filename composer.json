@@ -1,0 +1,15 @@
+{
+    "name": "user/824017-task-force-1",
+    "authors": [
+        {
+            "name": "Михаил",
+            "email": "serov.m@yandex.ru"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "MyClasses\\": "src/"
+        }
+    }
+}
