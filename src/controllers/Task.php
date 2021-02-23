@@ -1,5 +1,6 @@
 <?php
-namespace MyClasses\controllers;
+declare(strict_types = 1);
+namespace TaskForce\controllers;
 
 class Task
 {
@@ -13,81 +14,77 @@ class Task
 	const TO_ACCOMPLISH = 'to accomplish';
 	const TO_FAIL = 'to fail';
 
-	private string $cur_status;
-	private int $customer_id;
-	private int $executant_id;
+	private string $currentStatus;
+	private int $customerId;
+	private int $executantId;
 	
 	private array $mapping = [
-		'new' => 'Новое',
-		'canceled' => 'Отменено',
-		'executing' => 'В работе',
-		'accomplished' => 'Выполнено',
-		'failed' => 'Провалено',
-		'to cancel' => 'Отменить',
-		'to execute' => 'Откликнуться',
-		'to accomplish' => 'Выполнено',
-		'to fail' => 'Отказаться'
+		self::STATUS_NEW => 'Новое',
+		self::STATUS_CANCELED => 'Отменено',
+		self::STATUS_EXECUTING => 'В работе',
+		self::STATUS_ACCOMPLISHED => 'Выполнено',
+		self::STATUS_FAILED => 'Провалено',
+		self::TO_CANCEL => 'Отменить',
+		self::TO_EXECUTE => 'Откликнуться',
+		self::TO_ACCOMPLISH => 'Выполнено',
+		self::TO_FAIL => 'Отказаться'
 	];
-	private array $status_changes = [
-		'new' => [
-			'to cancel' => 'canceled',
-			'to execute' => 'executing'
+	private array $statusChanges = [
+		self::STATUS_NEW => [
+			self::TO_CANCEL => self::STATUS_CANCELED,
+			self::TO_EXECUTE => self::STATUS_EXECUTING
 		],
-		'executing' => [
-			'to accomplish' => 'accomplished',
-			'to fail' => 'failed'
+		self::STATUS_EXECUTING => [
+			self::TO_ACCOMPLISH => self::STATUS_ACCOMPLISHED,
+			self::TO_FAIL => self::STATUS_FAILED
 		]
 	];
 
-	public function __construct(int $executant_id, int $customer_id) //нужно ли указывать 2-й параметр необязательным, т.е. ?int $customer_id=null
+	public function __construct(int $executantId, int $customerId)
 	{
-		$this->executant_id = $executant_id;
-		$this->customer_id = $customer_id;
-		$this->cur_status = self::STATUS_NEW;
+		$this->executantId = $executantId;
+		$this->customerId = $customerId;
+		$this->currentStatus = self::STATUS_NEW;
 	}
 
 	public function getStatusCausedByAction(string $action): ?string 
 	{	
-		if ($is_able_to_change_cur_status = array_key_exists($this->cur_status, $this->status_changes)) {
-			if (isset($this->status_changes[$this->cur_status][$action])) {
-				return $this->status_changes[$this->cur_status][$action];
+		$isAbleToChangeCurrentStatus = isset($this->statusChanges[$this->currentStatus]);
+		if ($isAbleToChangeCurrentStatus) {
+			if (isset($this->statusChanges[$this->currentStatus][$action])) {
+				return $this->statusChanges[$this->currentStatus][$action];
 			}
 		}
 		return null;
 	}
-	public function getAvailableAction(int $user_id): ?string 
+	public function getAvailableAction(int $userId, string $userRole): ?string 
 	{
-		switch ($this->cur_status) {
-			case 'new': 										//нужно ли поставить в case константу вместо 'new', т.е. self::STATUS_NEW.
-				if ($user_id === $this->executant_id) {
-					$available_action = 'to execute'; 			 
-				} else {
-					$available_action = 'to cancel';
-				} 
+		switch ($this->currentStatus) {
+			case self::STATUS_NEW:
+				$availableAction = $userId === $this->executantId ? self::TO_EXECUTE : self::TO_CANCEL; 										
 				break;
-			case 'executing':
-				if ($user_id === $this->executant_id) {
-					$available_action = 'to fail';  			
-				} else {
-					$available_action = 'to accomplish';
-				}
+			case self::STATUS_EXECUTING:
+				$availableAction = $userId === $this->executantId ? self::TO_FAIL : self::TO_ACCOMPLISH;
 				break;
 			default:
-				$available_action = null; 
+				$availableAction = null; 
 		}
-		return $available_action;  //не нарушается ли здесь правило критерия Б36?
+		return $availableAction;
 	}
-	public function getMapping(): array
+	public function getMappingElementValue(string $actionOrStatusName): ?string
 	{
-		return $this->mapping;
+		if (isset($this->mapping[$actionOrStatusName])) {
+			return $this->mapping[$actionOrStatusName];
+		} 
+		return null;
 	}
 
-	//метод добавлен с целью проверки других методов класса Task в test.php
-	//по завершению задания этот метод будет удален
-	public function setStatus(string $new_status)
+	//метод для тестирования класса.
+	//по завершению задания удалю его.
+	public function setStatus(string $newStatus): string
 	{
-		$this->cur_status = $new_status;
-		echo "статус сменен на $this->cur_status <br><br>";
+		$this->currentStatus = $newStatus;
+		return "статус сменен на $this->currentStatus <br><br>";
 	} 
 
 }
