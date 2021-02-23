@@ -57,11 +57,11 @@ class Task
 		}
 		return null;
 	}
-	public function getAvailableAction(int $userId, string $userRole): ?string 
+	public function getAvailableAction(int $userId): ?string 
 	{
 		switch ($this->currentStatus) {
 			case self::STATUS_NEW:
-				$availableAction = $userId === $this->executantId ? self::TO_EXECUTE : self::TO_CANCEL; 										
+				$availableAction = $userId === $this->executantId ? self::TO_EXECUTE : self::TO_CANCEL; 
 				break;
 			case self::STATUS_EXECUTING:
 				$availableAction = $userId === $this->executantId ? self::TO_FAIL : self::TO_ACCOMPLISH;

@@ -35,7 +35,7 @@ assert($task->getStatusCausedByAction(Task::TO_EXECUTE) === Task::STATUS_EXECUTI
 
 //проверка получения доступного действия
 assert($task->getAvailableAction(4) === Task::TO_EXECUTE, 'корректный доступное действие to execute не получено');
-assert($task->getAvailableAction(1) === Task::TO_CANCEL, 'корректный доступное действие to cancel не получено');
+assert($task->getAvailableAction(5) === Task::TO_CANCEL, 'корректный доступное действие to cancel не получено');
 
 
 /*----------------------------------------------------------------------------------------------------------------------*/
