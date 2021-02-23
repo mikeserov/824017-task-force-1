@@ -85,6 +85,6 @@ echo $task->setStatus(Task::STATUS_ACCOMPLISHED);
 assert(is_null($task->getStatusCausedByAction('to eat ice-cream')), 'корректное возвращаемое значение null не получено');
 assert(is_null($task->getStatusCausedByAction('to fly to the Moon')), 'корректное возвращаемое значение null не получено');
 
-//проверка получения доступного действия
+//проверка получения доступного действия 
 assert(is_null($task->getAvailableAction(4)), 'корректное возвращаемое значение null не получено');
 assert(is_null($task->getAvailableAction(5)), 'корректное возвращаемое значение null не получено');
