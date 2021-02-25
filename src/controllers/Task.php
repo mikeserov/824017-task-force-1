@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types = 1);
+
 namespace TaskForce\controllers;
 
 class Task
@@ -40,7 +42,7 @@ class Task
 		]
 	];
 
-	public function __construct(int $executantId, int $customerId)
+	public function __construct(int $executantId, ?int $customerId = null)
 	{
 		$this->executantId = $executantId;
 		$this->customerId = $customerId;
@@ -73,10 +75,7 @@ class Task
 	}
 	public function getMappingElementValue(string $actionOrStatusName): ?string
 	{
-		if (isset($this->mapping[$actionOrStatusName])) {
-			return $this->mapping[$actionOrStatusName];
-		} 
-		return null;
+		return $this->mapping[$actionOrStatusName] ?? null;
 	}
 
 	//метод для тестирования класса.

@@ -1,11 +1,13 @@
 <?php
+
 declare(strict_types = 1);
+
 use TaskForce\controllers\Task;
 
 require_once 'vendor/autoload.php';
 
 $task = new Task(4, 5); //id исполнителя = 4, id заказчика = 5
-echo 'текущий статус new <br><br>'; 
+echo 'текущий статус new <br><br>';
 
 function myAssertHandler($file, $line, $code, $desc = null)
 {
@@ -85,6 +87,6 @@ echo $task->setStatus(Task::STATUS_ACCOMPLISHED);
 assert(is_null($task->getStatusCausedByAction('to eat ice-cream')), 'корректное возвращаемое значение null не получено');
 assert(is_null($task->getStatusCausedByAction('to fly to the Moon')), 'корректное возвращаемое значение null не получено');
 
-//проверка получения доступного действия 
+//проверка получения доступного действия
 assert(is_null($task->getAvailableAction(4)), 'корректное возвращаемое значение null не получено');
 assert(is_null($task->getAvailableAction(5)), 'корректное возвращаемое значение null не получено');
