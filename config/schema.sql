@@ -5,7 +5,7 @@ CREATE DATABASE task_force_1
 USE task_force_1;
 
 CREATE TABLE tasks (
-	id INTEGER AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	customer_id INT REFERENCES users(id),
 	executant_id INT REFERENCES users(id),
 	city_id INT REFERENCES cities(id),
@@ -20,7 +20,7 @@ CREATE TABLE tasks (
 );
 
 CREATE TABLE users (
-	id INTEGER AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	city_id INT REFERENCES cities(id),
 	signing_up_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	role VARCHAR(50),
@@ -51,23 +51,46 @@ CREATE TABLE notifications (
 );
 
 CREATE TABLE cities (
-	id INTEGER AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(100)
 );
 
 CREATE TABLE responses (
-	id INTEGER AUTO_INCREMENT PRIMARY KEY,
-	author INT REFERENCES users(id),
-	winner INT REFERENCES users(id)
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	user_id INT REFERENCES users(id),
+	task_id INT REFERENCES tasks(id),
+	payment INT,
+	comment VARCHAR(3000)
 );
 
+CREATE TABLE messages (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	user_id INT REFERENCES users(id),
+	task_id INT REFERENCES tasks(id),
+	message VARCHAR(3000)
+);
+
+CREATE TABLE reviews (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	task_id INT REFERENCES tasks(id),
+	customer_id INT REFERENCES users(id),
+	executant_id INT REFERENCES users(id),
+	completion VARCHAR(100),
+	comment VARCHAR(3000),
+	rating INT
+);
+
+CREATE TABLE specializations (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(500)
+);
 
 
 
 
 
 CREATE TABLE lots (
-	id INTEGER AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	dt_start TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
 	author INT REFERENCES users(id),
