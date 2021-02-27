@@ -4,24 +4,15 @@ CREATE DATABASE task_force_1
 
 USE task_force_1;
 
-CREATE TABLE tasks (
+
+CREATE TABLE cities (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	customer_id INT REFERENCES users(id),
-	executant_id INT REFERENCES users(id),
-	city_id INT REFERENCES cities(id),
-	posting_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- какой тип данных лучше выбрать, datetime или timezone..
-	status VARCHAR(50),
-	name VARCHAR(1000),
-	description VARCHAR(3000),
-	helpful_files VARCHAR(3000),
-	location VARCHAR(500),
-	payment VARCHAR(500),
-	deadline_date TIMESTAMP
+	name VARCHAR(100)
 );
 
 CREATE TABLE users (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	city_id INT REFERENCES cities(id),
+	city_id INT REFERENCES cities(id) ON DELETE RESTRICT,
 	signing_up_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	role VARCHAR(50),
 	name VARCHAR(300),
@@ -40,7 +31,27 @@ CREATE TABLE users (
 	is_subscribed_actions BOOLEAN,
 	is_subscribed_reviews BOOLEAN,
 	favorite_count INT,
-	failure_count INT
+	failure_count INT,
+	INDEX city_id (city_id)
+);
+
+CREATE TABLE tasks (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	customer_id INT REFERENCES users(id) ON DELETE RESTRICT,
+	executant_id INT REFERENCES users(id) ON DELETE RESTRICT,
+	city_id INT REFERENCES cities(id) ON DELETE RESTRICT,
+	posting_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+	status VARCHAR(50),
+	name VARCHAR(1000),
+	description VARCHAR(3000),
+	helpful_files VARCHAR(3000),
+	location VARCHAR(500),
+	payment VARCHAR(500),
+	deadline_date TIMESTAMP,
+	FULLTEXT INDEX name_description (name, description),
+	INDEX customer_id (customer_id),
+	INDEX executant_id (executant_id),
+	INDEX city_id (city_id)
 );
 
 CREATE TABLE notifications (
@@ -48,11 +59,6 @@ CREATE TABLE notifications (
 	user_id INT REFERENCES users(id),
 	task_id INT REFERENCES tasks(id),
 	type VARCHAR(100)
-);
-
-CREATE TABLE cities (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(100)
 );
 
 CREATE TABLE responses (
@@ -85,24 +91,14 @@ CREATE TABLE specializations (
 	name VARCHAR(500)
 );
 
-
-
-
-
-CREATE TABLE lots (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	dt_start TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-	author INT REFERENCES users(id),
-	winner INT REFERENCES users(id)
+CREATE TABLE userSpecialization (
+	user_id INT REFERENCES users(id) ON DELETE CASCADE,
+	specialization_id INT REFERENCES specializations(id) ON DELETE CASCADE,
+	PRIMARY KEY (user_id, specialization_id)
 );
 
-CREATE UNIQUE INDEX lot_id ON lots(id);
-CREATE UNIQUE INDEX user_id ON users(id);
-CREATE UNIQUE INDEX rate_id ON rates(id);
-
-CREATE INDEX lot_description ON lots(description(128));
-CREATE INDEX lot_name ON lots(name);
-
-
-CREATE FULLTEXT INDEX name_description ON lots (name, description);
+CREATE TABLE taskSpecialization (
+	task_id INT REFERENCES tasks(id) ON DELETE CASCADE,
+	specialization_id INT REFERENCES specializations(id) ON DELETE CASCADE,
+	PRIMARY KEY (task_id, specialization_id)
+);
