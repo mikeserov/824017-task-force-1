@@ -54,36 +54,46 @@ CREATE TABLE tasks (
 	INDEX city_id (city_id)
 );
 
-CREATE TABLE notifications (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	user_id INT REFERENCES users(id),
-	task_id INT REFERENCES tasks(id),
-	type VARCHAR(100)
+CREATE TABLE notifications_history (
+	user_id INT REFERENCES users(id) ON DELETE CASCADE,
+	task_id INT REFERENCES tasks(id) ON DELETE CASCADE,
+	type ENUM('message', 'action', 'review'),
+	description VARCHAR(500),
+	PRIMARY KEY (user_id, task_id),
+	INDEX user_id (user_id),
+	INDEX task_id (task_id)
 );
 
 CREATE TABLE responses (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	user_id INT REFERENCES users(id),
-	task_id INT REFERENCES tasks(id),
+	user_id INT REFERENCES users(id) ON DELETE CASCADE,
+	task_id INT REFERENCES tasks(id) ON DELETE CASCADE,
 	payment INT,
-	comment VARCHAR(3000)
+	comment VARCHAR(3000),
+	INDEX user_id (user_id),
+	INDEX task_id (task_id)
 );
 
 CREATE TABLE messages (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	user_id INT REFERENCES users(id),
-	task_id INT REFERENCES tasks(id),
-	message VARCHAR(3000)
+	user_id INT REFERENCES users(id) ON DELETE SET NULL,
+	task_id INT REFERENCES tasks(id) ON DELETE SET NULL,
+	message VARCHAR(3000),
+	INDEX user_id (user_id),
+	INDEX task_id (task_id)
 );
 
 CREATE TABLE reviews (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	task_id INT REFERENCES tasks(id),
-	customer_id INT REFERENCES users(id),
-	executant_id INT REFERENCES users(id),
+	task_id INT REFERENCES tasks(id) ON DELETE SET NULL,
+	customer_id INT REFERENCES users(id) ON DELETE SET NULL,
+	executant_id INT REFERENCES users(id) ON DELETE CASCADE,
 	completion VARCHAR(100),
 	comment VARCHAR(3000),
-	rating INT
+	rating INT,
+	INDEX task_id (task_id),
+	INDEX customer_id (customer_id),
+	INDEX executant_id (executant_id)
 );
 
 CREATE TABLE specializations (
@@ -94,11 +104,15 @@ CREATE TABLE specializations (
 CREATE TABLE userSpecialization (
 	user_id INT REFERENCES users(id) ON DELETE CASCADE,
 	specialization_id INT REFERENCES specializations(id) ON DELETE CASCADE,
-	PRIMARY KEY (user_id, specialization_id)
+	PRIMARY KEY (user_id, specialization_id),
+	INDEX user_id (user_id),
+	INDEX specialization_id (specialization_id)
 );
 
 CREATE TABLE taskSpecialization (
 	task_id INT REFERENCES tasks(id) ON DELETE CASCADE,
 	specialization_id INT REFERENCES specializations(id) ON DELETE CASCADE,
-	PRIMARY KEY (task_id, specialization_id)
+	PRIMARY KEY (task_id, specialization_id),
+	INDEX task_id (task_id),
+	INDEX specialization_id (specialization_id)
 );
