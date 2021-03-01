@@ -12,7 +12,7 @@ CREATE TABLE cities (
 
 CREATE TABLE users (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	city_id INT NOT NULL UNSIGNED REFERENCES cities(id) ON DELETE RESTRICT,
+	city_id INT UNSIGNED NOT NULL REFERENCES cities(id) ON DELETE RESTRICT,
 	signing_up_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	role VARCHAR(50) NOT NULL,
 	name VARCHAR(300) NOT NULL,
@@ -37,13 +37,13 @@ CREATE TABLE users_accomplished_tasks_photos (
 );
 
 CREATE TABLE users_optional_settings (
-	user_id INT UNSIGNED PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE, --ПРОВЕРИТЬ ЧТО СОЗДАЛСЯ ИНДЕКС
+	user_id INT UNSIGNED PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
 	is_hidden_contacts BOOLEAN,
 	is_hidden_account BOOLEAN,
 	is_subscribed_messages BOOLEAN,
 	is_subscribed_actions BOOLEAN,
 	is_subscribed_reviews BOOLEAN
-)
+);
 
 CREATE TABLE tasks (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -126,7 +126,7 @@ CREATE TABLE user_specialization (
 
 CREATE TABLE task_specialization (
 	task_id INT UNSIGNED REFERENCES tasks(id) ON DELETE CASCADE,
-	specialization_id INT NOT NULL UNSIGNED REFERENCES specializations(id) ON DELETE CASCADE,
+	specialization_id INT UNSIGNED NOT NULL REFERENCES specializations(id) ON DELETE CASCADE,
 	PRIMARY KEY (task_id, specialization_id),
 	INDEX task_id (task_id),
 	INDEX specialization_id (specialization_id)
