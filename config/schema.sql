@@ -31,18 +31,13 @@ CREATE TABLE users (
 );
 
 CREATE TABLE users_accomplished_tasks_photos (
-	user_id INT UNSIGNED PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE --ПРОВЕРИТЬ ЧТО СОЗДАЛСЯ ИНДЕКС
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	accomplished_tasks_photos VARCHAR(5000),
-	PRIMARY KEY (user_id, task_id),
-	INDEX user_id (user_id),
-	INDEX task_id (task_id)
+	user_id INT UNSIGNED REFERENCES users(id) ON DELETE CASCADE,
+	accomplished_task_photo VARCHAR(1000),
+	INDEX user_id (user_id)
 );
 
-
-
 CREATE TABLE users_optional_settings (
-	user_id INT UNSIGNED PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE --ПРОВЕРИТЬ ЧТО СОЗДАЛСЯ ИНДЕКС
+	user_id INT UNSIGNED PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE, --ПРОВЕРИТЬ ЧТО СОЗДАЛСЯ ИНДЕКС
 	is_hidden_contacts BOOLEAN,
 	is_hidden_account BOOLEAN,
 	is_subscribed_messages BOOLEAN,
@@ -59,7 +54,6 @@ CREATE TABLE tasks (
 	status VARCHAR(50),
 	name VARCHAR(1000) NOT NULL,
 	description VARCHAR(3000) NOT NULL,
-	helpful_files VARCHAR(3000),
 	location VARCHAR(500),
 	payment VARCHAR(500),
 	deadline_date TIMESTAMP,
@@ -67,6 +61,12 @@ CREATE TABLE tasks (
 	INDEX customer_id (customer_id),
 	INDEX executant_id (executant_id),
 	INDEX city_id (city_id)
+);
+
+CREATE TABLE task_helpful_files (
+	task_id INT UNSIGNED REFERENCES tasks(id) ON DELETE CASCADE, 
+	helpful_file VARCHAR(1000),
+	INDEX task_id (task_id)
 );
 
 CREATE TABLE notifications_history (
