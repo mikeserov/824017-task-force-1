@@ -4,18 +4,18 @@ declare(strict_types = 1);
 
 namespace TaskForce\controllers;
 
-class AccomplishAction extends AbstractAction {
+class ExecuteAction extends AbstractAction {
 	
 	public function getInternalActionName()
 	{
-		return 'Выполнено';
+		return 'Откликнуться';
 	}
 	public function getDisplayingActionName()
 	{
-		return 'to accomplish';
+		return 'to execute';
 	}
 	public function canUserAct(int $customerId, int $executantId, int $currentUserId, string $currentUserRole): bool
 	{
-		return customerId === currentUserId ? true : false;
+		return $currentUserRole === 'executant' && $currentUserId !== $customerId ? true : false;
 	}
 }
