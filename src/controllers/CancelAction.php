@@ -6,25 +6,22 @@ namespace TaskForce\controllers;
 
 class CancelAction extends AbstractAction {
 	
-	private string $InternalActionName;
-	private string $DisplayingActionName;
-
 	public function __construct()
 	{
-		$this->$InternalActionName = Task::TO_CANCEL;
-		$this->$DisplayingActionName
+		$this->internalActionName = Task::TO_CANCEL;
+		$this->displayingActionName = 'Отменить';
 	}
 
 	public function getInternalActionName()
 	{
-		return Task::TO_CANCEL;
+		return $this->internalActionName;
 	}
 	public function getDisplayingActionName()
 	{
-		return Task::getMappingElementValue(Task::TO_CANCEL);
+		return $this->displayingActionName;
 	}
-	public function canUserAct(int $customerId, int $executantId, int $currentUserId, string $currentUserRole): bool
+	public function canUserAct(int $customerId, int $executantId, int $currentUserId, ?string $currentUserRole): bool
 	{
-		return $currentUserRole === 'executant' && $currentUserId !== $customerId ? true : false;
+		return $currentUserId === $customerId ? true : false;
 	}
 }

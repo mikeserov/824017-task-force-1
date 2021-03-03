@@ -4,12 +4,12 @@ declare(strict_types = 1);
 
 namespace TaskForce\controllers;
 
-class ExecuteAction extends AbstractAction {
+class FailAction extends AbstractAction {
 	
 	public function __construct()
 	{
-		$this->internalActionName = Task::TO_EXECUTE;
-		$this->displayingActionName = 'Откликнуться';
+		$this->internalActionName = Task::TO_FAIL;
+		$this->displayingActionName = 'Отказаться';
 	}
 
 	public function getInternalActionName()
@@ -22,6 +22,6 @@ class ExecuteAction extends AbstractAction {
 	}
 	public function canUserAct(int $customerId, int $executantId, int $currentUserId, ?string $currentUserRole): bool
 	{
-		return $currentUserRole === 'executant' && $currentUserId !== $customerId ? true : false;
+		return $currentUserId === $executantId ? true : false;
 	}
 }

@@ -59,8 +59,9 @@ class Task
 		}
 		return null;
 	}
-	public function getAvailableAction(int $userId, string $userRole): ?AbstractAction 
+	public function getAvailableAction(int $userId, ?string $userRole = null): ?AbstractAction 
 	{
+		$availableAction = null;
 		switch ($this->currentStatus) {
 			case self::STATUS_NEW:
 				$actions = [new ExecuteAction, new CancelAction];
@@ -68,23 +69,16 @@ class Task
 			case self::STATUS_EXECUTING:
 				$actions = [new FailAction, new AccomplishAction];
 				break;
-			default:
-				$actions = null; 
 		}
-		if ($actions !== null) {
+		if (isset($actions)) {
 			foreach ($actions as $action) {
 				$isAvailableAction = $action->canUserAct($this->customerId, $this->executantId, $userId, $userRole);
-				if ($isAvailableAction) {
-					$availableAction = $action;
-					break;
-				} 
+				!$isAvailableAction ?: $availableAction = $action;
 			}
-		} else {
-			$availableAction = null;
 		}
 		return $availableAction;
 	}
-	static public function getMappingElementValue(string $actionOrStatusName): ?string
+	public function getMappingElementValue(string $actionOrStatusName): ?string
 	{
 		return $this->mapping[$actionOrStatusName] ?? null;
 	}

@@ -6,16 +6,22 @@ namespace TaskForce\controllers;
 
 class AccomplishAction extends AbstractAction {
 	
+	public function __construct()
+	{
+		$this->internalActionName = Task::TO_ACCOMPLISH;
+		$this->displayingActionName = 'Выполнено';
+	}
+
 	public function getInternalActionName()
 	{
-		return 'Выполнено';
+		return $this->internalActionName;
 	}
 	public function getDisplayingActionName()
 	{
-		return 'to accomplish';
+		return $this->displayingActionName;
 	}
-	public function canUserAct(int $customerId, int $executantId, int $currentUserId, string $currentUserRole): bool
+	public function canUserAct(int $customerId, int $executantId, int $currentUserId, ?string $currentUserRole): bool
 	{
-		return customerId === currentUserId ? true : false;
+		return $currentUserId === $customerId ? true : false;
 	}
 }
