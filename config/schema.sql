@@ -6,12 +6,12 @@ USE task_force_1;
 
 
 CREATE TABLE cities (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(100)
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE users (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	city_id INT UNSIGNED NOT NULL REFERENCES cities(id) ON DELETE RESTRICT,
 	signing_up_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	role VARCHAR(50) NOT NULL,
@@ -21,37 +21,36 @@ CREATE TABLE users (
 	avatar VARCHAR(1000),
 	birthday DATE,
 	description VARCHAR(3000),
-	accomplished_tasks_photos VARCHAR(5000),
 	phone VARCHAR(100),
 	skype VARCHAR(100),
 	telegram VARCHAR(100),
-	favorite_count INT UNSIGNED,
-	failure_count INT UNSIGNED,
+	favorite_count INT UNSIGNED NOT NULL,
+	failure_count INT UNSIGNED NOT NULL,
 	INDEX city_id (city_id)
 );
 
 CREATE TABLE users_accomplished_tasks_photos (
-	user_id INT UNSIGNED REFERENCES users(id) ON DELETE CASCADE,
-	accomplished_task_photo VARCHAR(1000),
+	user_id INT UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	accomplished_task_photo VARCHAR(1000) NOT NULL,
 	INDEX user_id (user_id)
 );
 
 CREATE TABLE users_optional_settings (
-	user_id INT UNSIGNED PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
-	is_hidden_contacts BOOLEAN,
-	is_hidden_account BOOLEAN,
-	is_subscribed_messages BOOLEAN,
-	is_subscribed_actions BOOLEAN,
-	is_subscribed_reviews BOOLEAN
+	user_id INT UNSIGNED NOT NULL PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+	is_hidden_contacts BOOLEAN NOT NULL,
+	is_hidden_account BOOLEAN NOT NULL,
+	is_subscribed_messages BOOLEAN NOT NULL,
+	is_subscribed_actions BOOLEAN NOT NULL,
+	is_subscribed_reviews BOOLEAN NOT NULL
 );
 
 CREATE TABLE tasks (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	customer_id INT UNSIGNED REFERENCES users(id) ON DELETE RESTRICT,
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	customer_id INT NOT NULL UNSIGNED REFERENCES users(id) ON DELETE RESTRICT,
 	executant_id INT UNSIGNED REFERENCES users(id) ON DELETE RESTRICT,
 	city_id INT UNSIGNED REFERENCES cities(id) ON DELETE RESTRICT,
-	posting_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-	status VARCHAR(50),
+	posting_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+	status VARCHAR(50) NOT NULL,
 	name VARCHAR(1000) NOT NULL,
 	description VARCHAR(3000) NOT NULL,
 	location VARCHAR(500),
@@ -64,25 +63,25 @@ CREATE TABLE tasks (
 );
 
 CREATE TABLE task_helpful_files (
-	task_id INT UNSIGNED REFERENCES tasks(id) ON DELETE CASCADE, 
-	helpful_file VARCHAR(1000),
+	task_id INT UNSIGNED NOT NULL REFERENCES tasks(id) ON DELETE CASCADE, 
+	helpful_file VARCHAR(1000) NOT NULL,
 	INDEX task_id (task_id)
 );
 
 CREATE TABLE notifications_history (
-	user_id INT UNSIGNED REFERENCES users(id) ON DELETE CASCADE,
-	task_id INT UNSIGNED REFERENCES tasks(id) ON DELETE CASCADE,
-	type ENUM('message', 'action', 'review'),
-	description VARCHAR(500),
+	user_id INT UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	task_id INT UNSIGNED NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
+	type ENUM('message', 'action', 'review') NOT NULL,
+	description VARCHAR(500) NOT NULL,
 	PRIMARY KEY (user_id, task_id),
 	INDEX user_id (user_id),
 	INDEX task_id (task_id)
 );
 
 CREATE TABLE responses (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	user_id INT UNSIGNED REFERENCES users(id) ON DELETE CASCADE,
-	task_id INT UNSIGNED REFERENCES tasks(id) ON DELETE CASCADE,
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	task_id INT UNSIGNED NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
 	payment INT UNSIGNED,
 	comment VARCHAR(3000),
 	INDEX user_id (user_id),
@@ -90,20 +89,20 @@ CREATE TABLE responses (
 );
 
 CREATE TABLE chat_messages (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	user_id INT UNSIGNED REFERENCES users(id) ON DELETE SET NULL,
-	task_id INT UNSIGNED REFERENCES tasks(id) ON DELETE SET NULL,
-	message VARCHAR(3000),
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT UNSIGNED NOT NULL REFERENCES users(id) ON DELETE SET NULL,
+	task_id INT UNSIGNED NOT NULL REFERENCES tasks(id) ON DELETE SET NULL,
+	message VARCHAR(3000) NOT NULL,
 	INDEX user_id (user_id),
 	INDEX task_id (task_id)
 );
 
 CREATE TABLE reviews (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	task_id INT UNSIGNED REFERENCES tasks(id) ON DELETE SET NULL,
-	customer_id INT UNSIGNED REFERENCES users(id) ON DELETE SET NULL,
-	executant_id INT UNSIGNED REFERENCES users(id) ON DELETE CASCADE,
-	is_accomplished VARCHAR(100) NOT NULL,
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	task_id INT UNSIGNED NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
+	customer_id INT UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	executant_id INT UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	completion ENUM('1', '2') NOT NULL,
 	comment VARCHAR(3000),
 	rating INT UNSIGNED,
 	INDEX task_id (task_id),
@@ -112,20 +111,20 @@ CREATE TABLE reviews (
 );
 
 CREATE TABLE specializations (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(500)
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(500) NOT NULL
 );
 
 CREATE TABLE user_specialization (
-	user_id INT UNSIGNED REFERENCES users(id) ON DELETE CASCADE,
-	specialization_id INT UNSIGNED REFERENCES specializations(id) ON DELETE CASCADE,
+	user_id INT UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	specialization_id INT UNSIGNED NOT NULL REFERENCES specializations(id) ON DELETE CASCADE,
 	PRIMARY KEY (user_id, specialization_id),
 	INDEX user_id (user_id),
 	INDEX specialization_id (specialization_id)
 );
 
 CREATE TABLE task_specialization (
-	task_id INT UNSIGNED REFERENCES tasks(id) ON DELETE CASCADE,
+	task_id INT UNSIGNED NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
 	specialization_id INT UNSIGNED NOT NULL REFERENCES specializations(id) ON DELETE CASCADE,
 	PRIMARY KEY (task_id, specialization_id),
 	INDEX task_id (task_id),
