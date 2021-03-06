@@ -13,10 +13,10 @@ class CsvToSqlConverter
 	private $sqlFileObject;
 
 
-	public function __construct(string $csvName, string $sqlName)
+	public function __construct(string $csvName, string $dataBaseTable)
     {
-		$this->csvName = '/data/' . $csvName;
-        $this->sqlName = '/data/' . $sqlName . '_' . strftime('%Y%m%d_%H-%M-%S') . '.sql';
+		$this->csvName = 'data/' . $csvName;
+        $this->sqlName = 'data/' . $dataBaseTable . strftime('%Y-%m-%d_%H-%M-%S') .;
     }
     public function convert()
     {
@@ -39,18 +39,29 @@ class CsvToSqlConverter
         }
 
         foreach ($this->getNextLine() as $line) {
-            $this->result[] = $line;
+            writeLine($line);
+        }
+    }
+
+    private function getNextLine(): ?iterable {
+        while (!$this->csvfileObject->eof()) {
+            yield $this->csvfileObject->fgetcsv();
         }
     }
 
 
+    'INSERT INTO specializations (name, icon) VALUES ();'
 
+   	private function writeLine($line)
+    {
+        $this->sqlFileObject->fwrite($line . "/r/n");
+    }
+    private function getHeaderData():?array {
+        $this->fileObject->rewind();
+        $data = $this->fileObject->fgetcsv();
 
-    private function getNextLine()
-
-
-   	private function writeLine()
-
+        return $data;
+    }
 
 
 }
