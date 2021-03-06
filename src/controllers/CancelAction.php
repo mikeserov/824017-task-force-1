@@ -14,11 +14,11 @@ class CancelAction extends AbstractAction {
 
 	public function getInternalName()
 	{
-		return $this->internalActionName;
+		return $this->internalName;
 	}
 	public function getDisplayingName()
 	{
-		return $this->displayingActionName;
+		return $this->displayingName;
 	}
 	public function canUserAct(int $customerId, int $executantId, int $currentUserId, ?string $currentUserRole): bool
 	{
