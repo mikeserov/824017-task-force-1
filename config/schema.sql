@@ -69,12 +69,13 @@ CREATE TABLE task_helpful_files (
 );
 
 CREATE TABLE notifications_history (
-	user_id INT UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	recipient_id INT UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
 	task_id INT UNSIGNED NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
-	type ENUM('message', 'action', 'review') NOT NULL,
-	description VARCHAR(500) NOT NULL,
-	PRIMARY KEY (user_id, task_id),
-	INDEX user_id (user_id),
+	event_type ENUM('1', '2', '3') NOT NULL,
+	is_shown BOOLEAN NOT NULL,
+	date_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	INDEX recipient_id (recipient_id),
 	INDEX task_id (task_id)
 );
 

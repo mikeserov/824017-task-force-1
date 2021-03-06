@@ -8,15 +8,15 @@ class CancelAction extends AbstractAction {
 	
 	public function __construct()
 	{
-		$this->internalActionName = Task::TO_CANCEL;
-		$this->displayingActionName = 'Отменить';
+		$this->internalName = Task::TO_CANCEL;
+		$this->displayingName = 'Отменить';
 	}
 
-	public function getInternalActionName()
+	public function getInternalName()
 	{
 		return $this->internalActionName;
 	}
-	public function getDisplayingActionName()
+	public function getDisplayingName()
 	{
 		return $this->displayingActionName;
 	}
