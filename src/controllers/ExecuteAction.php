@@ -8,17 +8,17 @@ class ExecuteAction extends AbstractAction {
 	
 	public function __construct()
 	{
-		$this->internalActionName = Task::TO_EXECUTE;
-		$this->displayingActionName = 'Откликнуться';
+		$this->internalName = Task::TO_EXECUTE;
+		$this->displayingName = 'Откликнуться';
 	}
 
-	public function getInternalActionName()
+	public function getInternalName()
 	{
-		return $this->internalActionName;
+		return $this->internalName;
 	}
-	public function getDisplayingActionName()
+	public function getDisplayingName()
 	{
-		return $this->displayingActionName;
+		return $this->displayingName;
 	}
 	public function canUserAct(int $customerId, int $executantId, int $currentUserId, ?string $currentUserRole): bool
 	{
