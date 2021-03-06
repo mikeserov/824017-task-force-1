@@ -18,7 +18,7 @@ class Task
 
 	private string $currentStatus;
 	private int $customerId;
-	private ?int $executantId;
+	private int $executantId;
 	
 	private array $mapping = [
 		self::STATUS_NEW => 'Новое',
@@ -42,7 +42,7 @@ class Task
 		]
 	];
 
-	public function __construct(int $customerId, ?int $executantId = null)
+	public function __construct(int $executantId, ?int $customerId = null)
 	{
 		$this->executantId = $executantId;
 		$this->customerId = $customerId;
@@ -59,22 +59,17 @@ class Task
 		}
 		return null;
 	}
-	public function getAvailableAction(int $userId, ?string $userRole = null): ?AbstractAction 
+	public function getAvailableAction(int $userId): ?string 
 	{
-		$availableAction = null;
 		switch ($this->currentStatus) {
 			case self::STATUS_NEW:
-				$actions = [new ExecuteAction, new CancelAction];
+				$availableAction = $userId === $this->executantId ? self::TO_EXECUTE : self::TO_CANCEL; 
 				break;
 			case self::STATUS_EXECUTING:
-				$actions = [new FailAction, new AccomplishAction];
+				$availableAction = $userId === $this->executantId ? self::TO_FAIL : self::TO_ACCOMPLISH;
 				break;
-		}
-		if (isset($actions)) {
-			foreach ($actions as $action) {
-				$isAvailableAction = $action->canUserAct($this->customerId, $this->executantId, $userId, $userRole);
-				!$isAvailableAction ?: $availableAction = $action;
-			}
+			default:
+				$availableAction = null; 
 		}
 		return $availableAction;
 	}
