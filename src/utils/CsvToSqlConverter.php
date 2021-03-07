@@ -15,9 +15,21 @@ class CsvToSqlConverter
 	private SplFileObject $sqlFileObject;
     private string $dataBaseTable;
 
+    /*private array $randFunctions [
+        'users' => [
+            'role' => function () {
+                return array_rand(array('executant', 'customer'));
+            },
+            'telegram' => 
+            telegram =>,
+            favorite_count =>,
+            failure_count =>
+        ]
+    ];*/
+
 	public function __construct(string $csvName)
     {
-        $this->dataBaseTable = explode('.', $csvName)[0];
+        $this->dataBaseTable = explode('.', $csvName)[0] ?? null; //это же не является нарушением Б37?
         $this->sqlName = 'data/' . $this->dataBaseTable . strftime('_%Y-%m-%d_%H-%M-%S') . '.sql';
 		$this->csvName = 'data/' . $csvName;
     }
@@ -58,7 +70,7 @@ class CsvToSqlConverter
     private function getHeaders(): string {
         $this->csvFileObject->rewind();
         $data = $this->csvFileObject->fgetcsv();
-        $headers = (string) array_shift($data); //не пойму, стоит ли здесь явно приводить к string, захотелось перестраховаться, т.к. вдруг каким-то образом 1-е полe окажется int
+        $headers = array_shift($data);
         foreach ($data as $value) {
             $headers .= ", $value";
         }
@@ -69,7 +81,7 @@ class CsvToSqlConverter
             yield $this->csvFileObject->fgetcsv();
         }
     }
-   	private function writeLine($line): void
+   	private function writeLine(string $line): void
     {
         $this->sqlFileObject->fwrite("$line\r\n");
     }
