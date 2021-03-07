@@ -11,6 +11,7 @@ class CsvToSqlConverter
 
 	private $csvFileObject;
 	private $sqlFileObject;
+    private $dataBaseTable;
 
 
 	public function __construct(string $csvName, string $dataBaseTable)
@@ -38,7 +39,10 @@ class CsvToSqlConverter
             throw new SourceFileException("Не удалось создать SQL файл для записи");
         }
 
-        foreach ($this->getNextLine() as $line) {
+        $firstLinePart = "INSERT INTO $this->dataBaseTable (" . getHeaders();
+        $this->csvfileObject->seek(1);
+        foreach ($this->getNextLine() as $insertingValues) {
+            $line = $firstLinePart .  . ") VALUES ();"
             writeLine($line);
         }
     }
@@ -49,19 +53,25 @@ class CsvToSqlConverter
         }
     }
 
-
-    'INSERT INTO specializations (name, icon) VALUES ();'
+    
 
    	private function writeLine($line)
     {
         $this->sqlFileObject->fwrite($line . "/r/n");
     }
-    private function getHeaderData():?array {
-        $this->fileObject->rewind();
-        $data = $this->fileObject->fgetcsv();
+    private function getHeaders(): string {
+        $this->csvFileObject->rewind();
+        $data = $this->csvfileObject->fgetcsv();
 
-        return $data;
+        str_replace
+
+        $headers = (string) $data[0]; //не пойму стоит ли здесь явно приводить к string, захотелось т.к. вдруг каким-то образов полу будет
+        if (count($data) > 1) {
+            foreach ($data as $value) {
+                $headers .= ", $value"
+            }
+        }
+        return $headers;
     }
-
 
 }
