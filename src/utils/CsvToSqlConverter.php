@@ -39,10 +39,21 @@ class CsvToSqlConverter
             throw new SourceFileException("Не удалось создать SQL файл для записи");
         }
 
-        $firstLinePart = "INSERT INTO $this->dataBaseTable (" . getHeaders();
+        $this->csvfileObject->setFlags(SplFileObject::READ_CSV); 
+
+
+        $headers = getHeaders();
         $this->csvfileObject->seek(1);
+        $firstValues = implode($this->csvfileObject->fgetcsv(), '", "');
+        
+        $firstSqlLine = "INSERT INTO $this->dataBaseTable (" . $headers . ') VALUES ("' . $firstValues . '"),';
+        writeLine($firstSqlLine);
+
+        $this->csvfileObject->seek(2);
         foreach ($this->getNextLine() as $insertingValues) {
-            $line = $firstLinePart .  . ") VALUES ();"
+
+            $line = '("' . implode($insertingValues, '", "') . '"),';
+            
             writeLine($line);
         }
     }
@@ -53,8 +64,6 @@ class CsvToSqlConverter
         }
     }
 
-    
-
    	private function writeLine($line)
     {
         $this->sqlFileObject->fwrite($line . "/r/n");
@@ -62,16 +71,12 @@ class CsvToSqlConverter
     private function getHeaders(): string {
         $this->csvFileObject->rewind();
         $data = $this->csvfileObject->fgetcsv();
-
-        str_replace
-
-        $headers = (string) $data[0]; //не пойму стоит ли здесь явно приводить к string, захотелось т.к. вдруг каким-то образов полу будет
-        if (count($data) > 1) {
-            foreach ($data as $value) {
-                $headers .= ", $value"
-            }
+        $headers = (string) $data[0]; //не пойму, стоит ли здесь явно приводить к string, захотелось перестраховаться, т.к. вдруг каким-то образом 1-е полe окажется int
+        foreach ($data as $value) {
+            $headers .= ", $value"
         }
         return $headers;
     }
+
 
 }
