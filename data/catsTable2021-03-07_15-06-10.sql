@@ -1,0 +1,1 @@
+INSERT INTO  (name, name, icon) VALUES ("Уборка", "clean"),/r/n(""),/r/n(""),/r/n("Переезды", "cargo"),/r/n
