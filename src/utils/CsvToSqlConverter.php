@@ -15,22 +15,10 @@ class CsvToSqlConverter
 	private SplFileObject $sqlFileObject;
     private string $dataBaseTable;
 
-    /*private array $randFunctions [
-        'users' => [
-            'role' => function () {
-                return array_rand(array('executant', 'customer'));
-            },
-            'telegram' => 
-            telegram =>,
-            favorite_count =>,
-            failure_count =>
-        ]
-    ];*/
-
 	public function __construct(string $csvName)
     {
         $this->dataBaseTable = explode('.', $csvName)[0] ?? null; //это же не является нарушением Б37?
-        $this->sqlName = 'data/' . $this->dataBaseTable . strftime('_%Y-%m-%d_%H-%M-%S') . '.sql';
+        $this->sqlName = 'data/' . $this->dataBaseTable . '.sql';
 		$this->csvName = 'data/' . $csvName;
     }
 
@@ -64,6 +52,7 @@ class CsvToSqlConverter
         foreach ($this->getNextLine() as $insertingValues) {
             $insertingValues = $this->arrayToString($insertingValues);
             $line = '       ("' . $insertingValues . '"),';
+            $line = str_replace('"NULL"','NULL',$line);
             $this->writeLine($line);
         }
     }
