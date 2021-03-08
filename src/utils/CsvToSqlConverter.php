@@ -67,6 +67,7 @@ class CsvToSqlConverter
             $this->writeLine($line);
         }
     }
+    
     private function getHeaders(): string {
         $this->csvFileObject->rewind();
         $data = $this->csvFileObject->fgetcsv();
