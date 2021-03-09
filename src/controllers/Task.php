@@ -42,11 +42,22 @@ class Task
 		]
 	];
 
-	public function __construct(int $customerId, ?int $executantId = null)
+	public function __construct(int $customerId, ?int $executantId = null, string $status = self::STATUS_NEW)
 	{
 		$this->executantId = $executantId;
 		$this->customerId = $customerId;
-		$this->currentStatus = self::STATUS_NEW;
+		
+		if (!in_array($status, [
+			self::STATUS_NEW,
+			self::STATUS_CANCELED,
+			self::STATUS_EXECUTING,
+			self::STATUS_ACCOMPLISHED,
+			self::STATUS_FAILED
+		], true) {
+			throw new GivenArgumentException("Передан неверный статус '$status'");
+		}
+
+		$this->currentStatus = $status;
 	}
 
 	public function getStatusCausedByAction(string $action): ?string 
