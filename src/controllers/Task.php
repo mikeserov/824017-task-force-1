@@ -59,6 +59,7 @@ class Task
 		}
 		return null;
 	}
+
 	public function getAvailableAction(int $userId, ?string $userRole = null): ?AbstractAction 
 	{
 		$availableAction = null;
@@ -72,12 +73,14 @@ class Task
 		}
 		if (isset($actions)) {
 			foreach ($actions as $action) {
-				$isAvailableAction = $action->canUserAct($this->customerId, $this->executantId, $userId, $userRole);
-				!$isAvailableAction ?: $availableAction = $action;
+				if ($action->canUserAct($this->customerId, $this->executantId, $userId, $userRole)) {
+					$availableAction = $action;
+				}
 			}
 		}
 		return $availableAction;
 	}
+
 	public function getMappingElementValue(string $actionOrStatusName): ?string
 	{
 		return $this->mapping[$actionOrStatusName] ?? null;
@@ -89,6 +92,5 @@ class Task
 	{
 		$this->currentStatus = $newStatus;
 		return "статус сменен на $this->currentStatus <br><br>";
-	} 
-
+	}
 }

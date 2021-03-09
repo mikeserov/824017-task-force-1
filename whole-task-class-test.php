@@ -93,26 +93,3 @@ assert(is_null($task->getStatusCausedByAction('to fly to the Moon')), 'Ожид�
 //проверка получения доступного действия
 assert(is_null($task->getAvailableAction(5)), 'Ожидаемое значение null не получено');
 assert(is_null($task->getAvailableAction(4)), 'Ожидаемое значение null не получено');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

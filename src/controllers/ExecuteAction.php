@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace TaskForce\controllers;
 
-class ExecuteAction extends AbstractAction {
+final class ExecuteAction extends AbstractAction
+{
+	const ROLE_EXECUTANT = 'executant';
 	
 	public function __construct()
 	{
@@ -12,16 +14,18 @@ class ExecuteAction extends AbstractAction {
 		$this->displayingName = 'Откликнуться';
 	}
 
-	public function getInternalName()
+	public function getInternalName(): string
 	{
 		return $this->internalName;
 	}
-	public function getDisplayingName()
+
+	public function getDisplayingName(): string
 	{
 		return $this->displayingName;
 	}
+
 	public function canUserAct(int $customerId, int $executantId, int $currentUserId, ?string $currentUserRole): bool
 	{
-		return $currentUserRole === 'executant' && $currentUserId !== $customerId ? true : false;
+		return $currentUserRole === self::ROLE_EXECUTANT && $currentUserId !== $customerId;
 	}
 }

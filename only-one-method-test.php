@@ -54,26 +54,3 @@ assert(is_null($task->getAvailableAction(4)), 'Ожидаемое значени
 echo $task->setStatus(Task::STATUS_ACCOMPLISHED);
 assert(is_null($task->getAvailableAction(5)), 'Ожидаемое значение null не получено');
 assert(is_null($task->getAvailableAction(4)), 'Ожидаемое значение null не получено');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
