@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-use TaskForce\controllers\{Task, CancelAction, ExecuteAction, AccomplishAction, FailAction};
+use TaskForce\Controllers\{Task, CancelAction, ExecuteAction, AccomplishAction, FailAction};
 
 require_once 'vendor/autoload.php';
 
