@@ -55,7 +55,7 @@ class Task
             self::STATUS_EXECUTING,
             self::STATUS_ACCOMPLISHED,
             self::STATUS_FAILED
-        ], true) {
+        ], true)) {
             throw new GivenArgumentException("недопустимый статус '$status'");
         }
 
@@ -79,6 +79,11 @@ class Task
 
     public function getAvailableAction(int $userId, ?string $userRole = null): ?AbstractAction
     {
+        if ($userRole && !in_array($userRole, ['executant', 'customer'])) {
+            throw new GivenArgumentException("недопустимая роль '$userRole'");
+        }
+        //хотел бы объявить константы с этими ролями, но кажется что это будет излишняя информация для класса Task, а класса User(к которому роли имели бы большее отношение) нет, и в рамках задания он не требуется..
+
         $availableAction = null;
 
         switch ($this->currentStatus) {
