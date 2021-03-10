@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace TaskForce\controllers;
+namespace TaskForce\Controllers;
 
 abstract class AbstractAction
 {
-	protected string $internalName;
-	protected string $displayingName;
+    protected string $internalName;
+    protected string $displayingName;
 
-	abstract public function getInternalName();
-	abstract public function getDisplayingName();
-	abstract public function canUserAct(int $customerId, int $executantId, int $currentUserId, ?string $currentUserRole);
+    abstract public function getInternalName(): string;
+    abstract public function getDisplayingName(): string;
+    abstract public function canUserAct(int $customerId, int $executantId, int $currentUserId, ?string $currentUserRole): bool;
 }
