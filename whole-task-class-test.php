@@ -12,6 +12,7 @@ echo 'текущий статус new <br><br>';
 function myAssertHandler($file, $line, $code, $desc = null)
 {
     echo "Неудачная проверка утверждения в $file, строка $line";
+
     if ($desc) {
         echo ": $desc <br>";
     }
@@ -33,7 +34,7 @@ assert($task->getMappingElementValue(Task::STATUS_CANCELED) === 'Отменен�
 assert($task->getStatusCausedByAction(Task::TO_CANCEL) === Task::STATUS_CANCELED, 'Ожидаемый статус canceled не получен');
 assert($task->getStatusCausedByAction(Task::TO_EXECUTE) === Task::STATUS_EXECUTING, 'Ожидаемый статус executing не получен');
 
-//проверка получения доступного 
+//проверка получения доступного
 assert($task->getAvailableAction(5) instanceof CancelAction, 'Ожидаемое доступное действие в виде экземпляра CancelAction не получено');
 assert($task->getAvailableAction(999, 'executant') instanceof ExecuteAction, 'Ожидаемое доступное действие в виде экземпляра ExecuteAction не получено');
 

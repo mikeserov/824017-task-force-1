@@ -12,6 +12,7 @@ echo 'текущий статус new <br><br>';
 function myAssertHandler($file, $line, $code, $desc = null)
 {
     echo "Неудачная проверка утверждения в $file, строка $line";
+
     if ($desc) {
         echo ": $desc <br>";
     }

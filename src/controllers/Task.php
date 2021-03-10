@@ -62,20 +62,25 @@ class Task
         $this->currentStatus = $status;
     }
 
-    public function getStatusCausedByAction(string $action): ?string 
-    {    
+    public function getStatusCausedByAction(string $action): ?string
+    {
         $isAbleToChangeCurrentStatus = isset($this->statusChanges[$this->currentStatus]);
+
         if ($isAbleToChangeCurrentStatus) {
+
             if (isset($this->statusChanges[$this->currentStatus][$action])) {
+
                 return $this->statusChanges[$this->currentStatus][$action];
             }
         }
+
         return null;
     }
 
-    public function getAvailableAction(int $userId, ?string $userRole = null): ?AbstractAction 
+    public function getAvailableAction(int $userId, ?string $userRole = null): ?AbstractAction
     {
         $availableAction = null;
+
         switch ($this->currentStatus) {
             case self::STATUS_NEW:
                 $actions = [new ExecuteAction, new CancelAction];
@@ -83,14 +88,17 @@ class Task
             case self::STATUS_EXECUTING:
                 $actions = [new FailAction, new AccomplishAction];
                 break;
+            default:
+                return null;
         }
-        if (isset($actions)) {
-            foreach ($actions as $action) {
-                if ($action->canUserAct($this->customerId, $this->executantId, $userId, $userRole)) {
-                    $availableAction = $action;
-                }
+
+        foreach ($actions as $action) {
+
+            if ($action->canUserAct($this->customerId, $this->executantId, $userId, $userRole)) {
+                $availableAction = $action;
             }
         }
+        
         return $availableAction;
     }
 
@@ -100,10 +108,11 @@ class Task
     }
 
     //метод для тестирования класса.
-    //по завершению задания удалю его.
+    //по завершении задания удалю его.
     public function setStatus(string $newStatus): string
     {
         $this->currentStatus = $newStatus;
+
         return "статус сменен на $this->currentStatus <br><br>";
     }
 }
