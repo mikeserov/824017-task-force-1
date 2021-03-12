@@ -80,7 +80,7 @@ class CsvToSqlConverter
         }
     }
 
-       private function writeLine(string $line): void
+    private function writeLine(string $line): void
     {
         $this->sqlFileObject->fwrite("$line\r\n");
     }
