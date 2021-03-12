@@ -82,7 +82,6 @@ class Task
         if ($userRole && !in_array($userRole, ['executant', 'customer'])) {
             throw new GivenArgumentException("недопустимая роль '$userRole'");
         }
-        //хотел бы объявить константы с этими ролями, но кажется что это будет излишняя информация для класса Task, а класса User(к которому роли имели бы большее отношение) нет, и в рамках задания он не требуется..
 
         $availableAction = null;
 
