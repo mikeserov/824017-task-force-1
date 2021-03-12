@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-use TaskForce\controllers\{Task, CancelAction, ExecuteAction, AccomplishAction, FailAction};
+use TaskForce\Controllers\{Task, CancelAction, ExecuteAction, AccomplishAction, FailAction};
 
 require_once 'vendor/autoload.php';
 
@@ -12,6 +12,7 @@ echo 'текущий статус new <br><br>';
 function myAssertHandler($file, $line, $code, $desc = null)
 {
     echo "Неудачная проверка утверждения в $file, строка $line";
+
     if ($desc) {
         echo ": $desc <br>";
     }
@@ -33,7 +34,7 @@ assert($task->getMappingElementValue(Task::STATUS_CANCELED) === 'Отменен�
 assert($task->getStatusCausedByAction(Task::TO_CANCEL) === Task::STATUS_CANCELED, 'Ожидаемый статус canceled не получен');
 assert($task->getStatusCausedByAction(Task::TO_EXECUTE) === Task::STATUS_EXECUTING, 'Ожидаемый статус executing не получен');
 
-//проверка получения доступного 
+//проверка получения доступного
 assert($task->getAvailableAction(5) instanceof CancelAction, 'Ожидаемое доступное действие в виде экземпляра CancelAction не получено');
 assert($task->getAvailableAction(999, 'executant') instanceof ExecuteAction, 'Ожидаемое доступное действие в виде экземпляра ExecuteAction не получено');
 
@@ -63,8 +64,8 @@ assert($task->getStatusCausedByAction(Task::TO_ACCOMPLISH) === Task::STATUS_ACCO
 assert($task->getStatusCausedByAction(Task::TO_FAIL) === Task::STATUS_FAILED, 'Ожидаемый статус failed не получен');
 
 //проверка получения доступного действия
-assert($task->getAvailableAction(5, 'рыболов') instanceof AccomplishAction, 'Ожидаемое доступное действие в виде экземпляра AccomplishlAction не получено');
-assert($task->getAvailableAction(4, 'космонавт') instanceof FailAction, 'Ожидаемое доступное действие в виде экземпляра FailAction не получено');
+assert($task->getAvailableAction(5, 'customer') instanceof AccomplishAction, 'Ожидаемое доступное действие в виде экземпляра AccomplishlAction не получено');
+assert($task->getAvailableAction(4, 'executant') instanceof FailAction, 'Ожидаемое доступное действие в виде экземпляра FailAction не получено');
 
 
 
@@ -93,26 +94,3 @@ assert(is_null($task->getStatusCausedByAction('to fly to the Moon')), 'Ожид�
 //проверка получения доступного действия
 assert(is_null($task->getAvailableAction(5)), 'Ожидаемое значение null не получено');
 assert(is_null($task->getAvailableAction(4)), 'Ожидаемое значение null не получено');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

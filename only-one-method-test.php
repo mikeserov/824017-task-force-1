@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-use TaskForce\controllers\{Task, CancelAction, ExecuteAction, AccomplishAction, FailAction};
+use TaskForce\Controllers\{Task, CancelAction, ExecuteAction, AccomplishAction, FailAction};
 
 require_once 'vendor/autoload.php';
 
@@ -12,6 +12,7 @@ echo 'текущий статус new <br><br>';
 function myAssertHandler($file, $line, $code, $desc = null)
 {
     echo "Неудачная проверка утверждения в $file, строка $line";
+
     if ($desc) {
         echo ": $desc <br>";
     }
@@ -54,26 +55,3 @@ assert(is_null($task->getAvailableAction(4)), 'Ожидаемое значени
 echo $task->setStatus(Task::STATUS_ACCOMPLISHED);
 assert(is_null($task->getAvailableAction(5)), 'Ожидаемое значение null не получено');
 assert(is_null($task->getAvailableAction(4)), 'Ожидаемое значение null не получено');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
