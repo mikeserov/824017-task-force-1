@@ -64,8 +64,8 @@ assert($task->getStatusCausedByAction(Task::TO_ACCOMPLISH) === Task::STATUS_ACCO
 assert($task->getStatusCausedByAction(Task::TO_FAIL) === Task::STATUS_FAILED, 'Ожидаемый статус failed не получен');
 
 //проверка получения доступного действия
-assert($task->getAvailableAction(5, 'рыболов') instanceof AccomplishAction, 'Ожидаемое доступное действие в виде экземпляра AccomplishlAction не получено');
-assert($task->getAvailableAction(4, 'космонавт') instanceof FailAction, 'Ожидаемое доступное действие в виде экземпляра FailAction не получено');
+assert($task->getAvailableAction(5, 'customer') instanceof AccomplishAction, 'Ожидаемое доступное действие в виде экземпляра AccomplishlAction не получено');
+assert($task->getAvailableAction(4, 'executant') instanceof FailAction, 'Ожидаемое доступное действие в виде экземпляра FailAction не получено');
 
 
 

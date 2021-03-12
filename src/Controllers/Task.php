@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace TaskForce\Controllers;
 
+use TaskForce\Exceptions\GivenArgumentException;
+
 class Task
 {
     const STATUS_NEW = 'new';
@@ -42,11 +44,22 @@ class Task
         ]
     ];
 
-    public function __construct(int $customerId, ?int $executantId = null)
+    public function __construct(int $customerId, ?int $executantId = null, string $status = self::STATUS_NEW)
     {
         $this->executantId = $executantId;
         $this->customerId = $customerId;
-        $this->currentStatus = self::STATUS_NEW;
+        
+        if (!in_array($status, [
+            self::STATUS_NEW,
+            self::STATUS_CANCELED,
+            self::STATUS_EXECUTING,
+            self::STATUS_ACCOMPLISHED,
+            self::STATUS_FAILED
+        ], true)) {
+            throw new GivenArgumentException("недопустимый статус '$status'");
+        }
+
+        $this->currentStatus = $status;
     }
 
     public function getStatusCausedByAction(string $action): ?string
@@ -66,6 +79,11 @@ class Task
 
     public function getAvailableAction(int $userId, ?string $userRole = null): ?AbstractAction
     {
+        if ($userRole && !in_array($userRole, ['executant', 'customer'])) {
+            throw new GivenArgumentException("недопустимая роль '$userRole'");
+        }
+        //хотел бы объявить константы с этими ролями, но кажется что это будет излишняя информация для класса Task, а класса User(к которому роли имели бы большее отношение) нет, и в рамках задания он не требуется..
+
         $availableAction = null;
 
         switch ($this->currentStatus) {
