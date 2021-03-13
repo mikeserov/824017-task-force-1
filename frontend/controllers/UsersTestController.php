@@ -7,10 +7,8 @@ namespace frontend\controllers;
 use yii\web\Controller;
 use frontend\models\Users;
 
-class UsersController extends Controller
+class UsersTestController extends Controller
 {
-    public function actionIndex(): string
-
     public function actionShowAll(): string
     {
         $users = Users::find()->all();

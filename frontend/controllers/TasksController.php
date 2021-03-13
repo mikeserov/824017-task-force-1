@@ -7,9 +7,12 @@ namespace frontend\controllers;
 use yii\web\Controller;
 use frontend\models\Users;
 
-class UsersController extends Controller
+class TasksController extends Controller
 {
     public function actionIndex(): string
+    {
+        
+    }
 
     public function actionShowAll(): string
     {
