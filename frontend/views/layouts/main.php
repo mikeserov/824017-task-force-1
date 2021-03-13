@@ -16,15 +16,15 @@ AppAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
+    <?php $this->head() ?>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <?php $this->registerCsrfMetaTags() ?>
-    <title>TaskForce</title>
+    <title><?= Html::encode($this->title) ?></title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
-    <?php $this->head() ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
