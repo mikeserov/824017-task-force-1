@@ -11,7 +11,7 @@ class TasksController extends Controller
 {
     public function actionIndex(): string
     {
-        
+        $tasks 
     }
 
     public function actionShowAll(): string

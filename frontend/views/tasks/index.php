@@ -20,6 +20,9 @@
                         <p class="new-task__place">Санкт-Петербург, Центральный район</p>
                         <span class="new-task__time">4 часа назад</span>
                     </div>
+
+
+                    
                     <div class="new-task__card">
                         <div class="new-task__title">
                             <a href="#" class="link-regular"><h2>Убраться в квартире после вписки</h2></a>
