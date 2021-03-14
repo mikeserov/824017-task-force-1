@@ -1,79 +1,33 @@
-<?php var_dump($tasks) ?>
+<?php
 
-<?php foreach($tasks)
+declare(strict_types = 1);
 
+//require_once 'src/Utils/passedTime.php';
+?>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <!-- <section class="new-task">
+            <section class="new-task">
                 <div class="new-task__wrapper">
                     <h1>Новые задания</h1>
                     
                     
-
+                    <?php foreach ($tasks as $task): ?>
                     
-                    <div class="new-task__card">
-                        <div class="new-task__title">
-                            <a href="#" class="link-regular"><h2>Перевести войну и мир на клингонский</h2></a>
-                            <a  class="new-task__type link-regular" href="#"><p>Переводы</p></a>
+                        <div class="new-task__card">
+                            <div class="new-task__title">
+                                <a href="#" class="link-regular"><h2><?= htmlspecialchars($task['name']) ?></h2></a>
+                                <a  class="new-task__type link-regular" href="#"><p><?= htmlspecialchars($task['specialization']['name']) ?></p></a>
+                            </div>
+                            <div class="new-task__icon new-task__icon--<?= htmlspecialchars($task['specialization']['icon']) ?>"></div>
+                            <p class="new-task_description">
+                                <?= htmlspecialchars($task['description']) ?>
+                            </p>
+                            <b class="new-task__price new-task__price--<?= htmlspecialchars($task['specialization']['icon']) ?>"><?= htmlspecialchars($task['payment']) ?><b> ₽</b></b>
+                            <p class="new-task__place">Санкт-Петербург, Центральный район</p><!-- как я понял, это реализуется в будущих заданиях посредством geocoder API -->
+                            <span class="new-task__time"><?= htmlspecialchars($task['posting_date']) ?></span>
                         </div>
-                        <div class="new-task__icon new-task__icon--translation"></div>
-                        <p class="new-task_description">
-                            Значимость этих проблем настолько очевидна, что начало
-                            повседневной работы по формированию позиции
-                            требуют определения и уточнения позиций…
-                        </p>
-                        <b class="new-task__price new-task__price--translation">3400<b> ₽</b></b>
-                        <p class="new-task__place">Санкт-Петербург, Центральный район</p>
-                        <span class="new-task__time">4 часа назад</span>
-                    </div>
 
+                    <?php endforeach; ?>
 
-                    
-                    <div class="new-task__card">
-                        <div class="new-task__title">
-                            <a href="#" class="link-regular"><h2>Убраться в квартире после вписки</h2></a>
-                            <a class="new-task__type link-regular" href="#"><p>Уборка</p></a>
-                        </div>
-                        <div class="new-task__icon new-task__icon--clean"></div>
-                        <p class="new-task_description">
-                            Значимость этих проблем настолько очевидна, что начало
-                            повседневной работы по формированию позиции
-                            требуют определения и уточнения позиций…
-                        </p>
-                        <b class="new-task__price new-task__price--clean">1500<b> ₽</b></b>
-                        <p class="new-task__place">Санкт-Петербург, Центральный район</p>
-                        <span class="new-task__time">5 часов назад</span>
-                    </div>
-                    <div class="new-task__card">
-                        <div class="new-task__title">
-                            <a href="#" class="link-regular"><h2>Перевезти груз на новое место</h2></a>
-                            <a class="new-task__type link-regular" href="#"><p>Грузоперевозки</p></a>
-                        </div>
-                        <div class="new-task__icon new-task__icon--cargo"></div>
-                        <p class="new-task_description">
-                            Значимость этих проблем настолько очевидна, что начало
-                            повседневной работы по формированию позиции
-                            требуют определения и уточнения позиций…
-                        </p>
-                        <b class="new-task__price new-task__price--cargo">3000<b> ₽</b></b>
-                        <p class="new-task__place">Москва, Центральный район</p>
-                        <span class="new-task__time">10 часов назад</span>
-                    </div>
                 </div>
                 <div class="new-task__pagination">
                     <ul class="new-task__pagination-list">
@@ -121,4 +75,3 @@
                     </form>
                 </div>
             </section>
--->

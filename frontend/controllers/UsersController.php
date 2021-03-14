@@ -10,18 +10,9 @@ use frontend\models\Users;
 class UsersController extends Controller
 {
     public function actionIndex(): string
-
-    public function actionShowAll(): string
     {
-        $users = Users::find()->all();
+        $users = Users::find()->/*with('specialization')->*/where(['role' => 'executant'])->asArray()->all();
 
-        return $this->render('show-all', ['users' => $users]);
-    }
-
-    public function actionShowUserAndHisCity(int $id = 1): string
-    {
-        $user = Users::find()->where(['id' => $id])->with('city')->asArray()->all();
-        
-        return $this->render('show-user-and-his-city', ['user' => $user]);
+        return $this->render('index', ['users' => $users]);
     }
 }
