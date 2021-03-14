@@ -1,4 +1,25 @@
-            <section class="new-task">
+<?php var_dump($tasks) ?>
+
+<?php foreach($tasks)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- <section class="new-task">
                 <div class="new-task__wrapper">
                     <h1>Новые задания</h1>
                     
@@ -100,3 +121,4 @@
                     </form>
                 </div>
             </section>
+-->

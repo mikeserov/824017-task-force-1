@@ -22,15 +22,15 @@ use Yii;
  * @property string|null $deadline_date
  * @property string|null $address
  *
- * @property ChatMessage[] $chatMessages
+ * @property ChatMessages[] $chatMessages
  * @property NotificationsHistory[] $notificationsHistories
- * @property Response[] $responses
- * @property Review[] $reviews
- * @property TaskHelpfulFile[] $taskHelpfulFiles
- * @property User $customer
- * @property User $executant
- * @property City $city
- * @property Specialization $specialization
+ * @property Responses[] $responses
+ * @property Reviews[] $reviews
+ * @property TaskHelpfulFiles[] $taskHelpfulFiles
+ * @property Users $customer
+ * @property Users $executant
+ * @property Cities $city
+ * @property Specializations $specialization
  */
 class Tasks extends \yii\db\ActiveRecord
 {
@@ -56,10 +56,10 @@ class Tasks extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 1000],
             [['description'], 'string', 'max' => 3000],
             [['payment', 'address'], 'string', 'max' => 500],
-            [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['customer_id' => 'id']],
-            [['executant_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['executant_id' => 'id']],
-            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'id']],
-            [['specialization_id'], 'exist', 'skipOnError' => true, 'targetClass' => Specialization::className(), 'targetAttribute' => ['specialization_id' => 'id']],
+            [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['customer_id' => 'id']],
+            [['executant_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['executant_id' => 'id']],
+            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cities::className(), 'targetAttribute' => ['city_id' => 'id']],
+            [['specialization_id'], 'exist', 'skipOnError' => true, 'targetClass' => Specializations::className(), 'targetAttribute' => ['specialization_id' => 'id']],
         ];
     }
 
@@ -89,11 +89,11 @@ class Tasks extends \yii\db\ActiveRecord
     /**
      * Gets query for [[ChatMessages]].
      *
-     * @return \yii\db\ActiveQuery|ChatMessageQuery
+     * @return \yii\db\ActiveQuery|ChatMessagesQuery
      */
     public function getChatMessages()
     {
-        return $this->hasMany(ChatMessage::className(), ['task_id' => 'id']);
+        return $this->hasMany(ChatMessages::className(), ['task_id' => 'id']);
     }
 
     /**
@@ -109,71 +109,71 @@ class Tasks extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Responses]].
      *
-     * @return \yii\db\ActiveQuery|ResponseQuery
+     * @return \yii\db\ActiveQuery|ResponsesQuery
      */
     public function getResponses()
     {
-        return $this->hasMany(Response::className(), ['task_id' => 'id']);
+        return $this->hasMany(Responses::className(), ['task_id' => 'id']);
     }
 
     /**
      * Gets query for [[Reviews]].
      *
-     * @return \yii\db\ActiveQuery|ReviewQuery
+     * @return \yii\db\ActiveQuery|ReviewsQuery
      */
     public function getReviews()
     {
-        return $this->hasMany(Review::className(), ['task_id' => 'id']);
+        return $this->hasMany(Reviews::className(), ['task_id' => 'id']);
     }
 
     /**
      * Gets query for [[TaskHelpfulFiles]].
      *
-     * @return \yii\db\ActiveQuery|TaskHelpfulFileQuery
+     * @return \yii\db\ActiveQuery|TaskHelpfulFilesQuery
      */
     public function getTaskHelpfulFiles()
     {
-        return $this->hasMany(TaskHelpfulFile::className(), ['task_id' => 'id']);
+        return $this->hasMany(TaskHelpfulFiles::className(), ['task_id' => 'id']);
     }
 
     /**
      * Gets query for [[Customer]].
      *
-     * @return \yii\db\ActiveQuery|UserQuery
+     * @return \yii\db\ActiveQuery|UsersQuery
      */
     public function getCustomer()
     {
-        return $this->hasOne(User::className(), ['id' => 'customer_id']);
+        return $this->hasOne(Users::className(), ['id' => 'customer_id']);
     }
 
     /**
      * Gets query for [[Executant]].
      *
-     * @return \yii\db\ActiveQuery|UserQuery
+     * @return \yii\db\ActiveQuery|UsersQuery
      */
     public function getExecutant()
     {
-        return $this->hasOne(User::className(), ['id' => 'executant_id']);
+        return $this->hasOne(Users::className(), ['id' => 'executant_id']);
     }
 
     /**
      * Gets query for [[City]].
      *
-     * @return \yii\db\ActiveQuery|CityQuery
+     * @return \yii\db\ActiveQuery|CitiesQuery
      */
     public function getCity()
     {
-        return $this->hasOne(City::className(), ['id' => 'city_id']);
+        return $this->hasOne(Cities::className(), ['id' => 'city_id']);
     }
 
     /**
      * Gets query for [[Specialization]].
      *
-     * @return \yii\db\ActiveQuery|SpecializationQuery
+     * @return \yii\db\ActiveQuery|SpecializationsQuery
      */
     public function getSpecialization()
     {
-        return $this->hasOne(Specialization::className(), ['id' => 'specialization_id']);
+        return $this->hasOne(Specializations::className(), ['id' => 'specialization_id']);
     }
 
     /**
