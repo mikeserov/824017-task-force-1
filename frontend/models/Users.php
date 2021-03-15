@@ -24,18 +24,18 @@ use Yii;
  * @property int $failure_count
  * @property string|null $address
  *
- * @property ChatMessages[] $chatMessages
+ * @property ChatMessage[] $chatMessages
  * @property NotificationsHistory[] $notificationsHistories
- * @property Responses[] $responses
- * @property Reviews[] $reviews
- * @property Reviews[] $reviews0
- * @property Tasks[] $tasks
- * @property Tasks[] $tasks0
+ * @property Response[] $responses
+ * @property Review[] $reviews
+ * @property Review[] $reviews0
+ * @property Task[] $tasks
+ * @property Task[] $tasks0
  * @property UserSpecialization[] $userSpecializations
- * @property Specializations[] $specializations
- * @property Cities $city
- * @property UsersAccomplishedTasksPhotos[] $usersAccomplishedTasksPhotos
- * @property UsersOptionalSettings $usersOptionalSettings
+ * @property Specialization[] $specializations
+ * @property City $city
+ * @property UsersAccomplishedTasksPhoto[] $usersAccomplishedTasksPhotos
+ * @property UsersOptionalSetting $usersOptionalSetting
  */
 class Users extends \yii\db\ActiveRecord
 {
@@ -62,7 +62,7 @@ class Users extends \yii\db\ActiveRecord
             [['avatar'], 'string', 'max' => 1000],
             [['phone', 'skype', 'telegram'], 'string', 'max' => 100],
             [['address'], 'string', 'max' => 500],
-            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cities::className(), 'targetAttribute' => ['city_id' => 'id']],
+            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'id']],
         ];
     }
 
@@ -94,11 +94,11 @@ class Users extends \yii\db\ActiveRecord
     /**
      * Gets query for [[ChatMessages]].
      *
-     * @return \yii\db\ActiveQuery|ChatMessagesQuery
+     * @return \yii\db\ActiveQuery|ChatMessageQuery
      */
     public function getChatMessages()
     {
-        return $this->hasMany(ChatMessages::className(), ['user_id' => 'id']);
+        return $this->hasMany(ChatMessage::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -114,51 +114,51 @@ class Users extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Responses]].
      *
-     * @return \yii\db\ActiveQuery|ResponsesQuery
+     * @return \yii\db\ActiveQuery|ResponseQuery
      */
     public function getResponses()
     {
-        return $this->hasMany(Responses::className(), ['user_id' => 'id']);
+        return $this->hasMany(Response::className(), ['user_id' => 'id']);
     }
 
     /**
      * Gets query for [[Reviews]].
      *
-     * @return \yii\db\ActiveQuery|ReviewsQuery
+     * @return \yii\db\ActiveQuery|ReviewQuery
      */
     public function getReviews()
     {
-        return $this->hasMany(Reviews::className(), ['customer_id' => 'id']);
+        return $this->hasMany(Review::className(), ['customer_id' => 'id']);
     }
 
     /**
      * Gets query for [[Reviews0]].
      *
-     * @return \yii\db\ActiveQuery|ReviewsQuery
+     * @return \yii\db\ActiveQuery|ReviewQuery
      */
     public function getReviews0()
     {
-        return $this->hasMany(Reviews::className(), ['executant_id' => 'id']);
+        return $this->hasMany(Review::className(), ['executant_id' => 'id']);
     }
 
     /**
      * Gets query for [[Tasks]].
      *
-     * @return \yii\db\ActiveQuery|TasksQuery
+     * @return \yii\db\ActiveQuery|TaskQuery
      */
     public function getTasks()
     {
-        return $this->hasMany(Tasks::className(), ['customer_id' => 'id']);
+        return $this->hasMany(Task::className(), ['customer_id' => 'id']);
     }
 
     /**
      * Gets query for [[Tasks0]].
      *
-     * @return \yii\db\ActiveQuery|TasksQuery
+     * @return \yii\db\ActiveQuery|TaskQuery
      */
     public function getTasks0()
     {
-        return $this->hasMany(Tasks::className(), ['executant_id' => 'id']);
+        return $this->hasMany(Task::className(), ['executant_id' => 'id']);
     }
 
     /**
@@ -174,41 +174,41 @@ class Users extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Specializations]].
      *
-     * @return \yii\db\ActiveQuery|SpecializationsQuery
+     * @return \yii\db\ActiveQuery|SpecializationQuery
      */
     public function getSpecializations()
     {
-        return $this->hasMany(Specializations::className(), ['id' => 'specialization_id'])->viaTable('user_specialization', ['user_id' => 'id']);
+        return $this->hasMany(Specialization::className(), ['id' => 'specialization_id'])->viaTable('user_specialization', ['user_id' => 'id']);
     }
 
     /**
      * Gets query for [[City]].
      *
-     * @return \yii\db\ActiveQuery|CitiesQuery
+     * @return \yii\db\ActiveQuery|CityQuery
      */
     public function getCity()
     {
-        return $this->hasOne(Cities::className(), ['id' => 'city_id']);
+        return $this->hasOne(City::className(), ['id' => 'city_id']);
     }
 
     /**
      * Gets query for [[UsersAccomplishedTasksPhotos]].
      *
-     * @return \yii\db\ActiveQuery|UsersAccomplishedTasksPhotosQuery
+     * @return \yii\db\ActiveQuery|UsersAccomplishedTasksPhotoQuery
      */
     public function getUsersAccomplishedTasksPhotos()
     {
-        return $this->hasMany(UsersAccomplishedTasksPhotos::className(), ['user_id' => 'id']);
+        return $this->hasMany(UsersAccomplishedTasksPhoto::className(), ['user_id' => 'id']);
     }
 
     /**
-     * Gets query for [[UsersOptionalSettings]].
+     * Gets query for [[UsersOptionalSetting]].
      *
-     * @return \yii\db\ActiveQuery|UsersOptionalSettingsQuery
+     * @return \yii\db\ActiveQuery|UsersOptionalSettingQuery
      */
-    public function getUsersOptionalSettings()
+    public function getUsersOptionalSetting()
     {
-        return $this->hasOne(UsersOptionalSettings::className(), ['user_id' => 'id']);
+        return $this->hasOne(UsersOptionalSetting::className(), ['user_id' => 'id']);
     }
 
     /**

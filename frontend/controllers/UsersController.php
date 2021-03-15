@@ -11,7 +11,7 @@ class UsersController extends Controller
 {
     public function actionIndex(): string
     {
-        $users = Users::find()->/*with('specialization')->*/where(['role' => 'executant'])->asArray()->all();
+        $users = Users::find()->where(['role' => 'executant'])->with('specializations')->asArray()->all();
 
         return $this->render('index', ['users' => $users]);
     }

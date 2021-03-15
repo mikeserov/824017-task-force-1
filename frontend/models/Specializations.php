@@ -11,9 +11,9 @@ use Yii;
  * @property string $name
  * @property string $icon
  *
- * @property Tasks[] $tasks
+ * @property Task[] $tasks
  * @property UserSpecialization[] $userSpecializations
- * @property Users[] $users
+ * @property User[] $users
  */
 class Specializations extends \yii\db\ActiveRecord
 {
@@ -52,11 +52,11 @@ class Specializations extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Tasks]].
      *
-     * @return \yii\db\ActiveQuery|TasksQuery
+     * @return \yii\db\ActiveQuery|TaskQuery
      */
     public function getTasks()
     {
-        return $this->hasMany(Tasks::className(), ['specialization_id' => 'id']);
+        return $this->hasMany(Task::className(), ['specialization_id' => 'id']);
     }
 
     /**
@@ -72,11 +72,11 @@ class Specializations extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Users]].
      *
-     * @return \yii\db\ActiveQuery|UsersQuery
+     * @return \yii\db\ActiveQuery|UserQuery
      */
     public function getUsers()
     {
-        return $this->hasMany(Users::className(), ['id' => 'user_id'])->viaTable('user_specialization', ['specialization_id' => 'id']);
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('user_specialization', ['specialization_id' => 'id']);
     }
 
     /**
