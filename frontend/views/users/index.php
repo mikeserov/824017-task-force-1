@@ -1,5 +1,10 @@
 <?php
-var_dump($users);
+//var_dump($users);
+
+foreach ($users as $user) {
+    var_dump($user);
+    echo '<br><br>';
+}
 
  ?>
 

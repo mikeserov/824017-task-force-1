@@ -178,7 +178,7 @@ class Users extends \yii\db\ActiveRecord
      */
     public function getSpecializations()
     {
-        return $this->hasMany(Specialization::className(), ['id' => 'specialization_id'])->viaTable('user_specialization', ['user_id' => 'id']);
+        return $this->hasMany(Specializations::className(), ['id' => 'specialization_id'])->viaTable('user_specialization', ['user_id' => 'id']);
     }
 
     /**

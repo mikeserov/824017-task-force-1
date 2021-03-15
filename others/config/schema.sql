@@ -162,7 +162,7 @@ CREATE TABLE reviews (
 	executant_id INT UNSIGNED NOT NULL,
 	completion ENUM('1', '2') NOT NULL,
 	comment VARCHAR(3000),
-	rating INT UNSIGNED,
+	rating INT UNSIGNED NOT NULL,
 	INDEX task_id (task_id),
 	INDEX customer_id (customer_id),
 	INDEX executant_id (executant_id),
