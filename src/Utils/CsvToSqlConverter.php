@@ -18,7 +18,7 @@ final class CsvToSqlConverter
     public function __construct(string $csvName)
     {
         if (!is_readable('data/' . $csvName)) {
-            throw new SourceFileException("CSV файл '$csvName' либо не существует в директории 'data' либо он не доступен для чтения");
+            throw new SourceFileException("CSV файл '$csvName' либо не существует в директории 'data' либо не доступен для чтения");
         }
 
         $dataBaseTable = explode('.', $csvName)[0] ?? null;
