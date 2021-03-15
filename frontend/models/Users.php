@@ -23,6 +23,7 @@ use Yii;
  * @property int $favorite_count
  * @property int $failure_count
  * @property string|null $address
+ * @property string $last_activity_date_time
  *
  * @property ChatMessage[] $chatMessages
  * @property NotificationsHistory[] $notificationsHistories
@@ -55,7 +56,7 @@ class Users extends \yii\db\ActiveRecord
         return [
             [['city_id', 'role', 'name', 'email', 'password', 'favorite_count', 'failure_count'], 'required'],
             [['city_id', 'favorite_count', 'failure_count'], 'integer'],
-            [['signing_up_date', 'birthday'], 'safe'],
+            [['signing_up_date', 'birthday', 'last_activity_date_time'], 'safe'],
             [['role'], 'string', 'max' => 50],
             [['name', 'email'], 'string', 'max' => 300],
             [['password', 'description'], 'string', 'max' => 3000],
@@ -88,6 +89,7 @@ class Users extends \yii\db\ActiveRecord
             'favorite_count' => 'Favorite Count',
             'failure_count' => 'Failure Count',
             'address' => 'Address',
+            'last_activity_date_time' => 'Last Activity Date Time',
         ];
     }
 
@@ -128,7 +130,7 @@ class Users extends \yii\db\ActiveRecord
      */
     public function getReviews()
     {
-        return $this->hasMany(Review::className(), ['customer_id' => 'id']);
+        return $this->hasMany(Reviews::className(), ['customer_id' => 'id']);
     }
 
     /**
@@ -138,7 +140,7 @@ class Users extends \yii\db\ActiveRecord
      */
     public function getReviews0()
     {
-        return $this->hasMany(Review::className(), ['executant_id' => 'id']);
+        return $this->hasMany(Reviews::className(), ['executant_id' => 'id']);
     }
 
     /**

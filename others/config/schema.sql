@@ -28,6 +28,7 @@ CREATE TABLE users (
 	favorite_count INT UNSIGNED NOT NULL,
 	failure_count INT UNSIGNED NOT NULL,
 	address VARCHAR(500),
+	last_activity TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	INDEX city_id (city_id),
 	FOREIGN KEY (city_id)
 		REFERENCES cities(id)
@@ -162,7 +163,7 @@ CREATE TABLE reviews (
 	executant_id INT UNSIGNED NOT NULL,
 	completion ENUM('1', '2') NOT NULL,
 	comment VARCHAR(3000),
-	rating INT UNSIGNED NOT NULL,
+	rate INT UNSIGNED NOT NULL,
 	INDEX task_id (task_id),
 	INDEX customer_id (customer_id),
 	INDEX executant_id (executant_id),
