@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace TaskForce\Utils;
 
 use \SplFileObject;
-use \TypeError;
+use \RuntimeException;
 use TaskForce\Exceptions\SourceFileException;
 use TaskForce\Exceptions\GivenArgumentException;
 
@@ -13,7 +13,7 @@ final class CsvToSqlConverter
 {
     private string $csvName;
     private string $sqlName;
-    private string $dataBaseTable;
+    private ?string $dataBaseTable;
 
     public function __construct(string $csvName)
     {
@@ -21,10 +21,10 @@ final class CsvToSqlConverter
             throw new SourceFileException("CSV файл '$csvName' либо не существует в директории 'data' либо он не доступен для чтения");
         }
 
-        try {
-            $this->dataBaseTable = explode('.', $csvName)[0] ?? null;
-        } catch (TypeError $e) {
-            throw new GivenArgumentException("Попытка присвоить dataBaseTable пустое значение");
+        $this->dataBaseTable = explode('.', $csvName)[0] ?? null;
+
+        if (!$this->dataBaseTable) {
+            throw new GivenArgumentException("dataBaseTable присвоено пустое значение")
         }
 
         $this->sqlName = 'data/sql/' . $this->dataBaseTable . '.sql';
