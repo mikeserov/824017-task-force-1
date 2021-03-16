@@ -88,6 +88,10 @@ function getPassedTimeSinceLastActivity(string $startingDate): ?string
 </section>
 <section  class="search-task">
     <div class="search-task__wrapper">
+
+
+
+
         <form class="search-task__form" name="test" method="post" action="#">
             <fieldset class="search-task__categories">
                 <legend>Категории</legend>
@@ -119,5 +123,9 @@ function getPassedTimeSinceLastActivity(string $startingDate): ?string
                 <input class="input-middle input" id="9" type="search" name="q" placeholder="">
             <button class="button" type="submit">Искать</button>
         </form>
+
+
+
+        
     </div>
 </section>
