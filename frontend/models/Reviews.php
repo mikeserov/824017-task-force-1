@@ -14,7 +14,7 @@ use Yii;
  * @property int $executant_id
  * @property string $completion
  * @property string|null $comment
- * @property int|null $rating
+ * @property int $rate
  *
  * @property Task $task
  * @property User $customer
@@ -37,8 +37,8 @@ class Reviews extends \yii\db\ActiveRecord
     {
         return [
             [['adding_date'], 'safe'],
-            [['task_id', 'customer_id', 'executant_id', 'completion'], 'required'],
-            [['task_id', 'customer_id', 'executant_id', 'rating'], 'integer'],
+            [['task_id', 'customer_id', 'executant_id', 'completion', 'rate'], 'required'],
+            [['task_id', 'customer_id', 'executant_id', 'rate'], 'integer'],
             [['completion'], 'string'],
             [['comment'], 'string', 'max' => 3000],
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
@@ -60,7 +60,7 @@ class Reviews extends \yii\db\ActiveRecord
             'executant_id' => 'Executant ID',
             'completion' => 'Completion',
             'comment' => 'Comment',
-            'rating' => 'Rating',
+            'rate' => 'Rate',
         ];
     }
 
