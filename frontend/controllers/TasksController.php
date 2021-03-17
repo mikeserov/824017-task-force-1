@@ -13,13 +13,15 @@ class TasksController extends Controller
 {
     public function actionIndex(): string
     {
-    	$tasks = new Tasks;
+    	/*$tasks = new Tasks;
         if (Yii::$app->request->getIsPost()) {
         	$tasks->load()
-        }
+        }*/
 
         $tasks = Tasks::find()->with('specialization')->where(['status' => Task::STATUS_NEW])->orderBy(['posting_date' => SORT_DESC])->asArray()->all();
 
         return $this->render('index', ['tasks' => $tasks]);
     }
+
+    public function actionSearch()
 }

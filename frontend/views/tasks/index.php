@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use TaskForce\Exceptions\DateIntervalInverseException;
+use yii\widgets\ActiveForm;
 
 function getPassedTimeSinceLastActivity(string $startingDate): ?string
 {
@@ -90,7 +91,48 @@ function getPassedTimeSinceLastActivity(string $startingDate): ?string
     <div class="search-task__wrapper">
 
 
+        
 
+    
+        <?php $form = ActiveForm::begin([
+            'id' => 'search-task',
+            'options' => [
+                'class' => 'search-task__form'
+            ]
+        ]);
+        ?>
+
+            <fieldset class="search-task__categories">
+
+                <?php foreach ($model->attributeLabels() as $attr => $label): ?>
+
+                    <?php $field = new ActiveField([
+                        'model' => $model,
+                        'template' => "{label}\n{input}",
+                        'attribute' => $attr,
+                        'options' => [
+                            'class' => 'visually-hidden checkbox__input'
+                            'type' => 'checkbox'
+                            'name' => ''
+                        ]
+                    ]);
+                    
+                    
+                    $field->textInput([
+                        'class' => 'field__input input input--big placeholder-shown',
+                        'id'
+                    ]
+                    );
+                    ?>
+
+                    <?=$field->render(); ?>
+
+                <?php endforeach; ?>
+
+            </fieldset>
+
+       
+        <?php ActiveForm::end(); ?>
 
         <form class="search-task__form" name="test" method="post" action="#">
             <fieldset class="search-task__categories">
